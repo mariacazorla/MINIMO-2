@@ -13,15 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Lanzador: muestra la lista de secciones -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Al pulsar una sección, abre esta pantalla con los productos -->
+        <activity android:name=".StoreActivity"/>
+        <activity android:name=".RegisterActivity"/>
         <activity android:name=".SectionActivity" />
         <activity android:name=".AddProductActivity" />
 

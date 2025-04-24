@@ -10,21 +10,23 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+
 public interface StoreAPI {
-    @GET("usuarios/secciones")
+
+    @GET("tienda/secciones")
     Call<List<Seccion>> getAllSecciones();
-    @GET("usuarios/productos/seccion/{nombre}")
+
+    @GET("tienda/productos/seccion/{nombre}")
     Call<List<Producto>> getProductosPorSeccion(@Path("nombre") String nombreSeccion);
 
-    @POST("usuarios/productos/seccion/{seccion}")
+    @POST("tienda/productos/seccion/{seccion}")
     Call<Void> addProducto(@Path("seccion") String nombreSeccion, @Body Producto producto);
 
-    @DELETE("usuarios/productos/{id}")
+    @DELETE("tienda/productos/{id}")
     Call<Void> eliminarProducto(@Path("id") String idProducto);
 
-    @GET("/productos/buscar")
+    @GET("tienda/productos/buscar")
     Call<List<Producto>> searchProductos(@Query("nombre") String nombre);
-
 }
 
 

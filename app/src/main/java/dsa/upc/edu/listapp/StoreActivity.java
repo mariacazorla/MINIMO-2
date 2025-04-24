@@ -5,11 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -22,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class StoreActivity extends AppCompatActivity {
     private RecyclerView rv;
     private SwipeRefreshLayout swipe;
     private SectionAdapter adapter;
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         rv=findViewById(R.id.rvSections);
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter=new SectionAdapter(sec-> {
-            Intent i=new Intent(MainActivity.this, SectionActivity.class);
+            Intent i=new Intent(StoreActivity.this, SectionActivity.class);
             i.putExtra("sectionName", sec.getNombre());
             startActivity(i);
         });
@@ -94,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onFailure(Call<List<Seccion>> c, Throwable t){
                 swipe.setRefreshing(false);
                 Log.e(TAG, "Error al cargar secciones", t);
-                Toast.makeText(MainActivity.this,"Error red",Toast.LENGTH_SHORT).show();
+                Toast.makeText(StoreActivity.this,"Error red",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -110,14 +107,14 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             productAdapter.setData(response.body());
                         } else {
-                            Toast.makeText(MainActivity.this, "No se encontraron productos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StoreActivity.this, "No se encontraron productos", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<Producto>> call, Throwable t) {
                         swipe.setRefreshing(false);
-                        Toast.makeText(MainActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StoreActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
