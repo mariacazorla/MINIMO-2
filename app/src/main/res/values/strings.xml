@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">ListApp</string>
+    <string name="logo_description">Logo de la aplicación</string>
+    <string name="add_product">Añadir producto</string>
+    <string name="product_list_description">Lista de productos</string>
 </resources>

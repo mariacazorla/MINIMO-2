@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="dsa.upc.edu.listapp">
 
     <!-- Permiso necesario para las llamadas HTTP -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,21 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".LoginActivity">
+        <!-- Splash como actividad inicial -->
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Otras actividades -->
+        <activity android:name=".LoginActivity" />
         <activity android:name=".StoreActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".SectionActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".PartidasMenuActivity" />
         <activity android:name=".PartidaActivity" />
-
-
 
     </application>
 </manifest>

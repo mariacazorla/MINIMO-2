@@ -1,5 +1,5 @@
 package dsa.upc.edu.listapp;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.*;
 import android.widget.TextView;
 import java.util.*;
