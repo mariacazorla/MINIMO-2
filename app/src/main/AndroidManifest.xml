@@ -16,21 +16,41 @@
         android:theme="@style/AppTheme">
 
         <!-- Splash como actividad inicial -->
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Otras actividades -->
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".StoreActivity"/>
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".SectionActivity" />
-        <activity android:name=".AddProductActivity" />
-        <activity android:name=".PartidasMenuActivity" />
-        <activity android:name=".PartidaActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
 
+        <activity
+            android:name=".StoreActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".SectionActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".AddProductActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".PartidasMenuActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".PartidaActivity"
+            android:exported="true" />
     </application>
 </manifest>
