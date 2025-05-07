@@ -15,7 +15,7 @@ import dsa.upc.edu.listapp.auth.*;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etUsername, etPassword;
+    private EditText etUsername, etPassword,etConfirmPassword;
     private Button btnRegister, btnGoToLogin;
     private ApiService api;
 
@@ -26,6 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         etUsername   = findViewById(R.id.etUsername);
         etPassword   = findViewById(R.id.etPassword);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
+
         btnRegister  = findViewById(R.id.btnRegister);
         btnGoToLogin = findViewById(R.id.btnGoToLogin);
 
@@ -34,9 +36,15 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             String user = etUsername.getText().toString().trim();
             String pass = etPassword.getText().toString();
+            String confirmPass = etConfirmPassword.getText().toString();
 
-            if (user.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Por favor completa ambos campos", Toast.LENGTH_SHORT).show();
+            if (user.isEmpty() || pass.isEmpty() || confirmPass.isEmpty()) {
+                Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!pass.equals(confirmPass)) {
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                 return;
             }
 
