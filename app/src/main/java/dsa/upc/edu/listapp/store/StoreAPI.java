@@ -2,6 +2,9 @@
 package dsa.upc.edu.listapp.store;
 
 import java.util.List;
+
+import dsa.upc.edu.listapp.MonedasResponse;
+import dsa.upc.edu.listapp.auth.*;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -13,10 +16,10 @@ import retrofit2.http.Query;
 
 public interface StoreAPI {
 
-    @GET("tienda/secciones")
+    @GET("tienda/categorias")
     Call<List<Seccion>> getAllSecciones();
 
-    @GET("tienda/productos/seccion/{nombre}")
+    @GET("tienda/categorias/{categoria}")
     Call<List<Producto>> getProductosPorSeccion(@Path("nombre") String nombreSeccion);
 
     @POST("tienda/productos/seccion/{seccion}")
@@ -27,6 +30,28 @@ public interface StoreAPI {
 
     @GET("tienda/productos/buscar")
     Call<List<Producto>> searchProductos(@Query("nombre") String nombre);
+
+
+    // Partidas
+
+    @GET("partidas")
+    Call<List<Partida>> getPartidas();
+
+    @POST("partidas")
+    Call<Partida> crearPartida();
+
+
+
+    @DELETE("partidas/{id_partida}")
+    Call<Void> deletePartida(@Path("id_partida") String idPartida);
+
+
+
+    @GET("partidas/monedas/{id_partida}")
+    Call<MonedasResponse> getMonedas(@Path("id_partida") String idPartida);
+
+
+
 }
 
 

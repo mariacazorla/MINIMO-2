@@ -24,6 +24,9 @@
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".SectionActivity" />
         <activity android:name=".AddProductActivity" />
+        <activity android:name=".PartidasMenuActivity" />
+        <activity android:name=".PartidaActivity" />
+
 
 
     </application>

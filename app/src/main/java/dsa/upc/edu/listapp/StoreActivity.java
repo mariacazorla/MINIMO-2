@@ -15,9 +15,11 @@ import java.util.List;
 import dsa.upc.edu.listapp.store.API;
 import dsa.upc.edu.listapp.store.Producto;
 import dsa.upc.edu.listapp.store.Seccion;
+import dsa.upc.edu.listapp.store.StoreAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import dsa.upc.edu.listapp.auth.*;
 
 public class StoreActivity extends AppCompatActivity {
     private RecyclerView rv;
@@ -75,23 +77,34 @@ public class StoreActivity extends AppCompatActivity {
 
     }
 
-    private void loadSections(){
+    private void loadSections() {
         Log.d(TAG, "Lanzando petición a /secciones");
 
-        swipe.setRefreshing(true);
-        API.getStoreAPI().getAllSecciones().enqueue(new Callback<List<Seccion>>(){
-            @Override public void onResponse(Call<List<Seccion>> c, Response<List<Seccion>> r){
+        StoreAPI storeAPI = ApiClient.getClient(this).create(StoreAPI.class);
+
+        storeAPI.getAllSecciones().enqueue(new Callback<List<Seccion>>() {
+            @Override
+            public void onResponse(Call<List<Seccion>> c, Response<List<Seccion>> r) {
                 swipe.setRefreshing(false);
                 Log.d(TAG, "onResponse con código " + r.code());
 
-                if(r.isSuccessful() && r.body()!=null){
-                    adapter.setData(r.body());
-                } else Log.e(TAG,"GET Sec err "+r.code());
+                if (r.isSuccessful() && r.body() != null) {
+                    List<Seccion> secciones = r.body();
+                    if (secciones.isEmpty()) {
+                        Log.e(TAG, "No se encontraron secciones");
+                    } else {
+                        adapter.setData(secciones);
+                    }
+                } else {
+                    Log.e(TAG, "Error en la respuesta: " + r.code());
+                }
             }
-            @Override public void onFailure(Call<List<Seccion>> c, Throwable t){
+
+            @Override
+            public void onFailure(Call<List<Seccion>> c, Throwable t) {
                 swipe.setRefreshing(false);
                 Log.e(TAG, "Error al cargar secciones", t);
-                Toast.makeText(StoreActivity.this,"Error red",Toast.LENGTH_SHORT).show();
+                Toast.makeText(StoreActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
             }
         });
     }

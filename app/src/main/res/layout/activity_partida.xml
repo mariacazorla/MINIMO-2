@@ -5,10 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- TextView para mostrar la información de la partida -->
     <TextView
         android:id="@+id/textViewPartidaInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cargando..."
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:paddingBottom="16dp"/>
+
+    <!-- Botón para ir a la tienda -->
+    <Button
+        android:id="@+id/btnTienda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ir a la Tienda"
+        android:textSize="16sp" />
+
+    <!-- Botón para ir al inventario -->
+    <Button
+        android:id="@+id/btnInventario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ir al Inventario"
+        android:textSize="16sp" />
+
 </LinearLayout>

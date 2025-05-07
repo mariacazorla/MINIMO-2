@@ -1,4 +1,8 @@
 package dsa.upc.edu.listapp.store;
 
-public class CategoriaObjeto {
+
+public enum CategoriaObjeto {
+    ARMAS,
+    ARMADURAS,
+    POCIONES
 }

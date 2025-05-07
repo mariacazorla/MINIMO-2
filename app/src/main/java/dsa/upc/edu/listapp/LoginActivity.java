@@ -1,6 +1,7 @@
 package dsa.upc.edu.listapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -30,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin        = findViewById(R.id.btnLogin);
         btnGoToRegister = findViewById(R.id.btnGoToRegister);
 
-        api = ApiClient.getClient().create(ApiService.class);
+        // Aquí pasas el contexto de la actividad a getClient
+        api = ApiClient.getClient(LoginActivity.this).create(ApiService.class);
 
         btnLogin.setOnClickListener(v -> {
             String user = etUsername.getText().toString().trim();
@@ -46,9 +48,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
+                        SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
+                        prefs.edit().putString("token", response.body().getToken()).apply();
                         Toast.makeText(LoginActivity.this, "Login exitoso", Toast.LENGTH_SHORT).show();
-                        // Lanza tu StoreActivity de la tienda
-                        Intent intent = new Intent(LoginActivity.this, StoreActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, PartidasMenuActivity.class);
+                        intent.putExtra("nombreUsu", user);
                         startActivity(intent);
                         finish();
                     } else {
