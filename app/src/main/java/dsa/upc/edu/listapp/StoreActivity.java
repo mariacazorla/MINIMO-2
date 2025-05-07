@@ -2,134 +2,84 @@ package dsa.upc.edu.listapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import android.util.Log;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import dsa.upc.edu.listapp.store.API;
-import dsa.upc.edu.listapp.store.Producto;
-import dsa.upc.edu.listapp.store.Seccion;
+import dsa.upc.edu.listapp.auth.ApiClient;
 import dsa.upc.edu.listapp.store.StoreAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import dsa.upc.edu.listapp.auth.*;
 
 public class StoreActivity extends AppCompatActivity {
     private RecyclerView rv;
     private SwipeRefreshLayout swipe;
     private SectionAdapter adapter;
-    private ProductAdapter productAdapter;
-    private SearchView searchView;
 
+    private static final String TAG = "StoreActivity";
 
-    private static final String TAG="MainActivity";
-
-    @Override protected void onCreate(Bundle s){
-        super.onCreate(s);
-        Log.d(TAG, "onCreate de MainActivity arrancado");
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rv=findViewById(R.id.rvSections);
+
+        rv = findViewById(R.id.rvSections);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new SectionAdapter(sec-> {
-            Intent i=new Intent(StoreActivity.this, SectionActivity.class);
-            i.putExtra("sectionName", sec.getNombre());
+        adapter = new SectionAdapter(sec -> {
+            Intent i = new Intent(StoreActivity.this, SectionActivity.class);
+            i.putExtra("sectionName", sec);
             startActivity(i);
         });
         rv.setAdapter(adapter);
-/*
-        searchView = findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchProducts(query);  // Realizar la búsqueda cuando se envíe la consulta
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()) {
-                    loadSections();  // Si el texto está vacío, mostrar todos los productos
-                } else {
-                    searchProducts(newText);  // Realizar la búsqueda mientras el usuario escribe
-                }
-                return true;
-            }
-        });
-
- */
-
-
-        swipe=findViewById(R.id.swipeRefreshLayout);
+        swipe = findViewById(R.id.swipeRefreshLayout);
         swipe.setOnRefreshListener(this::loadSections);
 
         loadSections();
-
-
-
-
     }
 
     private void loadSections() {
-        Log.d(TAG, "Lanzando petición a /secciones");
+        Log.d(TAG, "Lanzando petición a /tienda/categorias");
+        swipe.setRefreshing(true);
 
-        StoreAPI storeAPI = ApiClient.getClient(this).create(StoreAPI.class);
-
-        storeAPI.getAllSecciones().enqueue(new Callback<List<Seccion>>() {
+        StoreAPI api = ApiClient.getClient(this).create(StoreAPI.class);
+        api.getAllSecciones().enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<Seccion>> c, Response<List<Seccion>> r) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> resp) {
                 swipe.setRefreshing(false);
-                Log.d(TAG, "onResponse con código " + r.code());
+                Log.d(TAG, "onResponse con código " + resp.code());
 
-                if (r.isSuccessful() && r.body() != null) {
-                    List<Seccion> secciones = r.body();
-                    if (secciones.isEmpty()) {
-                        Log.e(TAG, "No se encontraron secciones");
+                if (resp.isSuccessful() && resp.body() != null) {
+                    List<String> names = resp.body();
+                    if (names.isEmpty()) {
+                        Toast.makeText(StoreActivity.this, "No hay secciones disponibles", Toast.LENGTH_SHORT).show();
                     } else {
-                        adapter.setData(secciones);
+                        adapter.setDataFromStrings(names);
                     }
                 } else {
-                    Log.e(TAG, "Error en la respuesta: " + r.code());
+                    try {
+                        String err = resp.errorBody().string();
+                        Log.e(TAG, "Error en la respuesta: " + err);
+                        Toast.makeText(StoreActivity.this, "Error al cargar secciones", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error procesando body de error", e);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Seccion>> c, Throwable t) {
+            public void onFailure(Call<List<String>> call, Throwable t) {
                 swipe.setRefreshing(false);
-                Log.e(TAG, "Error al cargar secciones", t);
+                Log.e(TAG, "Error de red al cargar secciones", t);
                 Toast.makeText(StoreActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void searchProducts(String query) {
-        swipe.setRefreshing(true);
-        API.getStoreAPI()
-                .searchProductos(query)  // Usamos el método de búsqueda en la API
-                .enqueue(new Callback<List<Producto>>() {
-                    @Override
-                    public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
-                        swipe.setRefreshing(false);
-                        if (response.isSuccessful() && response.body() != null) {
-                            productAdapter.setData(response.body());
-                        } else {
-                            Toast.makeText(StoreActivity.this, "No se encontraron productos", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Producto>> call, Throwable t) {
-                        swipe.setRefreshing(false);
-                        Toast.makeText(StoreActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }

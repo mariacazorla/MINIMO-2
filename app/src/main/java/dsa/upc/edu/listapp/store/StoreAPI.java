@@ -17,10 +17,14 @@ import retrofit2.http.Query;
 public interface StoreAPI {
 
     @GET("tienda/categorias")
-    Call<List<Seccion>> getAllSecciones();
+    Call<List<String>> getAllSecciones();
 
     @GET("tienda/categorias/{categoria}")
-    Call<List<Producto>> getProductosPorSeccion(@Path("nombre") String nombreSeccion);
+    Call<List<Producto>> getProductosPorCategoria(@Path("categoria") String categoria);
+
+    @POST("carrito/{id_producto}")
+    Call<Void> agregarProductoAlCarrito(@Path("id_producto") String idProducto);
+
 
     @POST("tienda/productos/seccion/{seccion}")
     Call<Void> addProducto(@Path("seccion") String nombreSeccion, @Body Producto producto);
@@ -49,6 +53,7 @@ public interface StoreAPI {
 
     @GET("partidas/monedas/{id_partida}")
     Call<MonedasResponse> getMonedas(@Path("id_partida") String idPartida);
+
 
 
 
