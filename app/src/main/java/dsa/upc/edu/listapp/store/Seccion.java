@@ -1,5 +1,6 @@
 package dsa.upc.edu.listapp.store;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class Seccion {

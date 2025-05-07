@@ -1,6 +1,8 @@
 package dsa.upc.edu.listapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,83 +26,80 @@ public class SectionActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipe;
     private StoreAPI api;
     private String categoria;
+    private String idPartida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_section);
 
-        // Recupera la sección
-        categoria = getIntent().getStringExtra("sectionName");
-        if (categoria == null) {
-            Toast.makeText(this, "Categoría no especificada", Toast.LENGTH_SHORT).show();
+        // Recupera sección e ID de partida
+        categoria  = getIntent().getStringExtra("sectionName");
+        idPartida  = getIntent().getStringExtra("idPartida");
+        if (categoria == null || idPartida == null) {
+            Toast.makeText(this, "Faltan datos", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
         setTitle(categoria);
 
-        // Inicializa vista
-        rv = findViewById(R.id.rvProducts);
+        // Botón Carrito
+        Button btnCart = findViewById(R.id.btnCart);
+        btnCart.setOnClickListener(v -> {
+            Intent i = new Intent(SectionActivity.this, CarritoActivity.class);
+            i.putExtra("idPartida", idPartida);
+            startActivity(i);
+        });
+
+        // RecyclerView + SwipeRefresh
+        rv    = findViewById(R.id.rvProducts);
         rv.setLayoutManager(new LinearLayoutManager(this));
         swipe = findViewById(R.id.swipeRefreshProducts);
 
-        // Adapter y listener de "Comprar"
+        // Adapter “Comprar”
         adapter = new ProductAdapter();
-        adapter.setOnBuyClickListener(producto -> {
-            String idProd = producto.getId();
-            if (idProd == null || idProd.isEmpty()) {
-                Toast.makeText(this, "ID de producto inválido", Toast.LENGTH_SHORT).show();
+        adapter.setOnBuyClickListener(prod -> {
+            String id = prod.getId();
+            if (id == null || id.isEmpty()) {
+                Toast.makeText(this, "ID inválido", Toast.LENGTH_SHORT).show();
             } else {
-                agregarProductoAlCarrito(idProd);
+                api.agregarProductoAlCarrito(id)
+                        .enqueue(new Callback<Void>() {
+                            @Override public void onResponse(Call<Void> c, Response<Void> r) {
+                                Toast.makeText(SectionActivity.this,
+                                        r.isSuccessful() ? "Añadido" : "Fallo al añadir",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            @Override public void onFailure(Call<Void> c, Throwable t) {
+                                Toast.makeText(SectionActivity.this,
+                                        "Error red", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
         rv.setAdapter(adapter);
 
-        // Cliente Retrofit con token
+        // Retrofit con interceptor
         api = ApiClient.getClient(this).create(StoreAPI.class);
 
-        // Pull-to-refresh
         swipe.setOnRefreshListener(this::loadProducts);
-
-        // Carga inicial
         loadProducts();
     }
 
-    /** Carga productos de la categoría desde /tienda/categorias/{categoria} */
     private void loadProducts() {
         swipe.setRefreshing(true);
         api.getProductosPorCategoria(categoria).enqueue(new Callback<List<Producto>>() {
-            @Override
-            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> resp) {
+            @Override public void onResponse(Call<List<Producto>> c, Response<List<Producto>> r) {
                 swipe.setRefreshing(false);
-                if (resp.isSuccessful() && resp.body() != null) {
-                    adapter.setData(resp.body());
+                if (r.isSuccessful() && r.body() != null) {
+                    adapter.setData(r.body());
                 } else {
-                    Toast.makeText(SectionActivity.this, "Error cargando productos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SectionActivity.this, "Error cargando", Toast.LENGTH_SHORT).show();
                 }
             }
-            @Override
-            public void onFailure(Call<List<Producto>> call, Throwable t) {
+            @Override public void onFailure(Call<List<Producto>> c, Throwable t) {
                 swipe.setRefreshing(false);
-                Toast.makeText(SectionActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    /** Llama al endpoint POST /carrito/{id_producto} */
-    private void agregarProductoAlCarrito(String idProducto) {
-        api.agregarProductoAlCarrito(idProducto).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> resp) {
-                if (resp.isSuccessful()) {
-                    Toast.makeText(SectionActivity.this, "Añadido al carrito", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SectionActivity.this, "No se pudo añadir al carrito", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(SectionActivity.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SectionActivity.this, "Error red", Toast.LENGTH_SHORT).show();
             }
         });
     }

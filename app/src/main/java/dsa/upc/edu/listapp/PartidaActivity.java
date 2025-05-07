@@ -39,7 +39,9 @@ public class PartidaActivity extends AppCompatActivity {
 
         btnTienda.setOnClickListener(v -> {
             Intent intent = new Intent(PartidaActivity.this, StoreActivity.class);
+            intent.putExtra("idPartida", partida.getId_partida());
             startActivity(intent);
         });
+
     }
 }
