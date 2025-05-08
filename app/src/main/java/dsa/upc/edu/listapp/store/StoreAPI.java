@@ -32,6 +32,14 @@ public interface StoreAPI {
     @GET("tienda/productos/buscar")
     Call<List<Producto>> searchProductos(@Query("nombre") String nombre);
 
+    @GET("tienda/productoAleatorio")
+    Call<Objeto> getProductoAleatorio();
+
+
+    @POST("carrito/comprarAleatorio/{id_partida}")
+    Call<Objeto> comprarProductoAleatorio(@Path("id_partida") String idPartida);
+
+
 
     // Partidas
 
@@ -67,6 +75,11 @@ public interface StoreAPI {
 
     @DELETE("carrito")
     Call<Void> vaciarCarrito();
+
+    //Inventario
+
+    @GET("partidas/{id_partida}")
+    Call<Partida> getPartidaDetalle(@Path("id_partida") String idPartida);
 
 
 

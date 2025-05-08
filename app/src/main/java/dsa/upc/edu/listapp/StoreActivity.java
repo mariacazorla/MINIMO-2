@@ -28,29 +28,34 @@ public class StoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);  // o activity_store si es tu layout
+        setContentView(R.layout.activity_main);
 
-        // 1) Recupera el id de partida
         idPartida = getIntent().getStringExtra("idPartida");
 
-        // 2) Setup RecyclerView + Adapter (campo, no variable local)
+        // Añadir listener al botón RANDOM
+        findViewById(R.id.btnRandom).setOnClickListener(view -> {
+            Intent intent = new Intent(StoreActivity.this, RandomActivity.class);
+            intent.putExtra("idPartida", idPartida); // si RandomActivity lo necesita
+            startActivity(intent);
+        });
+
+        // Setup RecyclerView
         RecyclerView rv = findViewById(R.id.rvSections);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new SectionAdapter(name -> {
             Intent i = new Intent(StoreActivity.this, SectionActivity.class);
-            // name ya es la categoría (String)
             i.putExtra("sectionName", name);
             i.putExtra("idPartida", idPartida);
             startActivity(i);
         });
         rv.setAdapter(adapter);
 
-        // 3) Swipe to refresh
+        // Swipe to refresh
         swipe = findViewById(R.id.swipeRefreshLayout);
         swipe.setOnRefreshListener(this::loadSections);
 
-        // 4) Carga inicial
+        // Carga inicial
         loadSections();
     }
 

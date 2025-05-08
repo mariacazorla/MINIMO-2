@@ -54,6 +54,15 @@
             android:exported="true" />
 
         <activity
+            android:name=".InventarioActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".RandomActivity"
+            android:exported="true" />
+
+
+        <activity
             android:name=".PartidaActivity"
             android:exported="true" />
     </application>
