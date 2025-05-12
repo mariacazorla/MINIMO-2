@@ -36,6 +36,17 @@ public class LoginActivity extends AppCompatActivity {
 
         api = ApiClient.getClient(LoginActivity.this).create(ApiService.class);
 
+        CheckBox checkboxMostrarPassword = findViewById(R.id.checkboxMostrarPassword);
+
+        checkboxMostrarPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                etPassword.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                etPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            // Para mantener el cursor al final del texto
+            etPassword.setSelection(etPassword.length());
+        });
         btnLogin.setOnClickListener(v -> {
             String user = etUsername.getText().toString().trim();
             String pass = etPassword.getText().toString();

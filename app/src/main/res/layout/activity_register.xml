@@ -52,12 +52,19 @@
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:drawable/editbox_background_normal"
             android:hint="Confirmar contraseña"
             android:inputType="textPassword"
             android:paddingHorizontal="16dp" />
-
+        <CheckBox
+            android:id="@+id/checkboxMostrarPasswordRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mostrar contraseña"
+            android:minHeight="48dp"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp" />
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"

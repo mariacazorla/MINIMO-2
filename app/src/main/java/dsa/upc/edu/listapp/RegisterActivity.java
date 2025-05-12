@@ -3,7 +3,10 @@ package dsa.upc.edu.listapp;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.InputType;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,6 +22,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister, btnGoToLogin;
     private ApiService api;
 
+    private EditText etRegisterPassword;
+    private CheckBox checkboxMostrarPasswordRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,20 @@ public class RegisterActivity extends AppCompatActivity {
 
         api = ApiClient.getClient(RegisterActivity.this).create(ApiService.class);
 
+        CheckBox checkboxMostrarPasswordRegister = findViewById(R.id.checkboxMostrarPasswordRegister);
+
+        checkboxMostrarPasswordRegister.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                etConfirmPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            }
+            // Mantener el cursor al final
+            etPassword.setSelection(etPassword.length());
+            etConfirmPassword.setSelection(etConfirmPassword.length());
+        });
         btnRegister.setOnClickListener(v -> {
             String user = etUsername.getText().toString().trim();
             String pass = etPassword.getText().toString();
