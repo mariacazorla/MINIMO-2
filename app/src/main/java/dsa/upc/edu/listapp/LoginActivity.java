@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private Button btnLogin, btnGoToRegister;
     private ApiService api;
+    private CheckBox cbRememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         etPassword      = findViewById(R.id.etLoginPassword);
         btnLogin        = findViewById(R.id.btnLogin);
         btnGoToRegister = findViewById(R.id.btnGoToRegister);
+        cbRememberMe    = findViewById(R.id.cbRememberMe); // NUEVO
 
-        // Aquí pasas el contexto de la actividad a getClient
         api = ApiClient.getClient(LoginActivity.this).create(ApiService.class);
 
         btnLogin.setOnClickListener(v -> {
@@ -50,6 +52,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
                         prefs.edit().putString("token", response.body().getToken()).apply();
+
+                        // --- AQUI GUARDAMOS EL NOMBRE DE USUARIO SI EL CHECKBOX ESTÁ MARCADO ---
+                        if (cbRememberMe.isChecked()) {
+                            prefs.edit().putString("usuarioRecordado", user).apply();
+                        } else {
+                            prefs.edit().remove("usuarioRecordado").apply(); // Si no, borramos cualquier recordatorio anterior
+                        }
+
                         Toast.makeText(LoginActivity.this, "Login exitoso", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, PartidasMenuActivity.class);
                         intent.putExtra("nombreUsu", user);
@@ -72,4 +82,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-

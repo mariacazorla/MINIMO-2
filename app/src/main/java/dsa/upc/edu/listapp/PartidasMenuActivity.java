@@ -1,6 +1,7 @@
 package dsa.upc.edu.listapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -100,6 +101,16 @@ public class PartidasMenuActivity extends AppCompatActivity {
                     Toast.makeText(PartidasMenuActivity.this, "Error de red al crear partida", Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+        Button btnLogout = findViewById(R.id.btnLogout);
+
+        btnLogout.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
+            prefs.edit().remove("usuarioRecordado").apply(); // Borras el usuario recordado
+
+            Intent intent = new Intent(PartidasMenuActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Cierra esta pantalla
         });
     }
 

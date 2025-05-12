@@ -49,7 +49,12 @@
             android:paddingHorizontal="16dp"
             android:layout_marginBottom="24dp"
             android:inputType="textPassword" />
-
+        <CheckBox
+            android:id="@+id/cbRememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recuerdarme"
+            android:layout_marginTop="8dp"/>
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
