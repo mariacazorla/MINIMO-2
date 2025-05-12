@@ -2,12 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FAFAFA"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- SwipeRefreshLayout ahora tiene id swipeCart -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeCart"
         android:layout_width="0dp"
@@ -22,9 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"/>
-
+            android:paddingBottom="8dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabOpenMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_menu_24"
+app:backgroundTint="@color/red"
+        android:contentDescription="Abrir menú"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -33,6 +42,7 @@
         app:layout_constraintGuide_percent="0.80"
         android:orientation="horizontal" />
 
+    <!-- Los botones y textos de abajo -->
     <TextView
         android:id="@+id/tvTotal"
         android:layout_width="0dp"
@@ -42,7 +52,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tvCoins"
@@ -53,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTotal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:id="@+id/btnEmptyCart"
@@ -63,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvCoins"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnComprar"
-        android:layout_marginEnd="8dp"/>
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/btnComprar"
@@ -73,8 +83,6 @@
         app:layout_constraintTop_toBottomOf="@id/tvCoins"
         app:layout_constraintStart_toEndOf="@id/btnEmptyCart"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

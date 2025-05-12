@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import dsa.upc.edu.listapp.auth.ApiClient;
@@ -45,6 +47,10 @@ public class CarritoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrito);
+        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
+        fabOpenMenu.setOnClickListener(v -> {
+            NavigationBottomSheet.showNavigationMenu(this, idPartida);
+        });
 
         // Recuperar idPartida
         idPartida = getIntent().getStringExtra("idPartida");

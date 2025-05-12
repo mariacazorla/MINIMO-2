@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import dsa.upc.edu.listapp.auth.ApiClient;
@@ -28,6 +30,10 @@ public class InventarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventario);
+        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
+        fabOpenMenu.setOnClickListener(v -> {
+            NavigationBottomSheet.showNavigationMenu(this, null);
+        });
 
         idPartida = getIntent().getStringExtra("idPartida");
         if (idPartida == null) {

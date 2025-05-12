@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import dsa.upc.edu.listapp.auth.ApiClient;
@@ -29,6 +31,10 @@ public class StoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
+        fabOpenMenu.setOnClickListener(v -> {
+            NavigationBottomSheet.showNavigationMenu(this, idPartida);
+        });
 
         idPartida = getIntent().getStringExtra("idPartida");
 

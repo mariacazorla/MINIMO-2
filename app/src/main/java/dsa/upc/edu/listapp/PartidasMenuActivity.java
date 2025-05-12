@@ -3,11 +3,17 @@ package dsa.upc.edu.listapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +32,20 @@ public class PartidasMenuActivity extends AppCompatActivity {
     private PartidaAdapter adapter;
     private StoreAPI api;
     private List<Partida> partidas;
-    private Button btnCrearPartida;
+    private Button btnCrearPartida, btnLogout;
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partidas_menu);
+        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
+        fabOpenMenu.setOnClickListener(v -> {
+            NavigationBottomSheet.showNavigationMenu(this, null);
+        });
+
+        progressBar = findViewById(R.id.progressBar);
 
         recyclerView = findViewById(R.id.recyclerViewPartidas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,48 +54,40 @@ public class PartidasMenuActivity extends AppCompatActivity {
 
         api = ApiClient.getClient(PartidasMenuActivity.this).create(StoreAPI.class);
 
-        String nombreUsu = getIntent().getStringExtra("nombreUsu");
-
         partidas = new ArrayList<>();
 
         adapter = new PartidaAdapter(partidas, new PartidaAdapter.OnPartidaClickListener() {
             @Override
             public void onClick(Partida partida) {
-                // Aquí pones la lógica para abrir la pantalla de detalles de la partida
                 Intent intent = new Intent(PartidasMenuActivity.this, PartidaActivity.class);
                 intent.putExtra("partida", partida);
                 startActivity(intent);
             }
 
             @Override
-            public void onEliminarPartida(String idPartida, int position) {
-                // Llamar a la API para eliminar la partida
-                api.deletePartida(idPartida).enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            partidas.remove(position);
-                            adapter.notifyItemRemoved(position);
-                            Toast.makeText(PartidasMenuActivity.this, "Partida eliminada", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(PartidasMenuActivity.this, "Error al eliminar partida", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+            public void onEliminarPartida(Partida partida, int position) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(PartidasMenuActivity.this);
+                builder.setTitle("Eliminar partida")
+                        .setMessage(partida.getInventario() == null || partida.getInventario().isEmpty()
+                                ? "¿Seguro que quieres eliminar esta partida vacía?"
+                                : "Esta partida tiene objetos comprados.\n¿Seguro que quieres eliminarla?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Sí, eliminar", (dialog, which) -> {
+                            borrarPartida(partida.getId_partida(), position);
+                        })
+                        .setNegativeButton("Cancelar", (dialog, which) -> {
+                            dialog.dismiss();
+                        });
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(PartidasMenuActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
         recyclerView.setAdapter(adapter);
 
-        // Cargar partidas existentes
         cargarPartidas();
 
-        // Listener para crear nueva partida
         btnCrearPartida.setOnClickListener(v -> {
             api.crearPartida().enqueue(new Callback<Partida>() {
                 @Override
@@ -102,22 +108,17 @@ public class PartidasMenuActivity extends AppCompatActivity {
                 }
             });
         });
-        Button btnLogout = findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences("auth", MODE_PRIVATE);
-            prefs.edit().remove("usuarioRecordado").apply(); // Borras el usuario recordado
-
-            Intent intent = new Intent(PartidasMenuActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish(); // Cierra esta pantalla
-        });
     }
 
+
     private void cargarPartidas() {
+        progressBar.setVisibility(View.VISIBLE); // Mostrar spinner al empezar
+
         api.getPartidas().enqueue(new Callback<List<Partida>>() {
             @Override
             public void onResponse(Call<List<Partida>> call, Response<List<Partida>> response) {
+                progressBar.setVisibility(View.GONE); // Ocultar spinner al recibir respuesta
+
                 if (response.isSuccessful() && response.body() != null) {
                     partidas.clear();
                     partidas.addAll(response.body());
@@ -129,6 +130,26 @@ public class PartidasMenuActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Partida>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE); // También ocultar en caso de fallo
+                Toast.makeText(PartidasMenuActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void borrarPartida(String idPartida, int position) {
+        api.deletePartida(idPartida).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(PartidasMenuActivity.this, "Partida eliminada", Toast.LENGTH_SHORT).show();
+                    cargarPartidas(); // Recargar TODAS las partidas desde el servidor
+                } else {
+                    Toast.makeText(PartidasMenuActivity.this, "Error al eliminar partida", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(PartidasMenuActivity.this, "Error de red", Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,7 +1,8 @@
 package dsa.upc.edu.listapp.store;
 
+import java.io.Serializable;
 
-public class Objeto {
+public class Objeto implements Serializable {
     private String id_objeto;
     private String nombre;
     private int precio;

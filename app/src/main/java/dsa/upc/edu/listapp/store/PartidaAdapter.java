@@ -15,7 +15,7 @@ public class PartidaAdapter extends RecyclerView.Adapter<PartidaAdapter.ViewHold
 
     public interface OnPartidaClickListener {
         void onClick(Partida partida);
-        void onEliminarPartida(String idPartida, int position);
+        void onEliminarPartida(Partida partida, int position);
     }
 
     private List<Partida> partidas;
@@ -40,9 +40,8 @@ public class PartidaAdapter extends RecyclerView.Adapter<PartidaAdapter.ViewHold
 
         // Agregar un listener al botón de eliminar
         holder.btnEliminarPartida.setOnClickListener(v -> {
-            listener.onEliminarPartida(partida.getId_partida(), position);
+            listener.onEliminarPartida(partida, position);
         });
-
         holder.itemView.setOnClickListener(v -> listener.onClick(partida));
     }
 

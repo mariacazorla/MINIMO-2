@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import dsa.upc.edu.listapp.store.Partida;
 
 public class PartidaActivity extends AppCompatActivity {
@@ -13,11 +15,17 @@ public class PartidaActivity extends AppCompatActivity {
     private TextView textViewPartidaInfo;
     private Button btnTienda, btnInventario;
 
+    private String idPartida;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        idPartida = getIntent().getStringExtra("idPartida");
         setContentView(R.layout.activity_partida);
-
+        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
+        fabOpenMenu.setOnClickListener(v -> {
+            NavigationBottomSheet.showNavigationMenu(this, idPartida);
+        });
         textViewPartidaInfo = findViewById(R.id.textViewPartidaInfo);
         btnTienda           = findViewById(R.id.btnTienda);
         btnInventario       = findViewById(R.id.btnInventario);
