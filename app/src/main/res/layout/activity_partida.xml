@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/calle"
+
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,6 +12,7 @@
     <!-- TextView para la información -->
     <TextView
         android:id="@+id/textViewPartidaInfo"
+        android:textColor="@android:color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Cargando..."
@@ -65,6 +68,7 @@
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#99FFFFFF"
         android:text="Volver"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"

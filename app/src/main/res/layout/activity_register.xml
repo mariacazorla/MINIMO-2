@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#F5F5F5"
+    android:background="@drawable/register"
     tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@android:color/white"
+        android:background="#99FFFFFF"
         android:elevation="6dp"
         android:padding="24dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Nombre de usuario"
-            android:background="@android:drawable/editbox_background_normal"
+            android:background="#99FFFFFF"
             android:paddingHorizontal="16dp"
             android:layout_marginBottom="16dp"
             android:inputType="textPersonName" />
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Contraseña"
-            android:background="@android:drawable/editbox_background_normal"
+            android:background="#99FFFFFF"
             android:paddingHorizontal="16dp"
             android:layout_marginBottom="24dp"
             android:inputType="textPassword" />
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="8dp"
-            android:background="@android:drawable/editbox_background_normal"
+            android:background="#99FFFFFF"
             android:hint="Confirmar contraseña"
             android:inputType="textPassword"
             android:paddingHorizontal="16dp" />
@@ -72,7 +72,7 @@
             android:text="Registrarse"
             android:textAllCaps="false"
             android:backgroundTint="#1E3A8A"
-            android:textColor="#FFFFFF"
+            android:background="#99FFFFFF"
             android:layout_marginBottom="16dp" />
 
         <Button
