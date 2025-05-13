@@ -2,6 +2,7 @@ package dsa.upc.edu.listapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +38,13 @@ public class SectionActivity extends AppCompatActivity {
         fabOpenMenu.setOnClickListener(v -> {
             NavigationBottomSheet.showNavigationMenu(this, idPartida);
         });
-
+        Button backButton = findViewById(R.id.btn_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         // Recupera sección e ID de partida
         categoria  = getIntent().getStringExtra("sectionName");
         idPartida  = getIntent().getStringExtra("idPartida");

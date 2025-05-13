@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,14 +32,22 @@ public class StoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        idPartida = getIntent().getStringExtra("idPartida");
         setContentView(R.layout.activity_main);
         FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
         fabOpenMenu.setOnClickListener(v -> {
             NavigationBottomSheet.showNavigationMenu(this, idPartida);
+
         });
 
-        idPartida = getIntent().getStringExtra("idPartida");
-
+        Button backButton = findViewById(R.id.btn_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         // Añadir listener al botón RANDOM
         findViewById(R.id.btnRandom).setOnClickListener(view -> {
             Intent intent = new Intent(StoreActivity.this, RandomActivity.class);

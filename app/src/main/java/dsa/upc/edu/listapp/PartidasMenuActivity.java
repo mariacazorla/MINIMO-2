@@ -51,7 +51,6 @@ public class PartidasMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnCrearPartida = findViewById(R.id.btnCrearPartida);
-
         api = ApiClient.getClient(PartidasMenuActivity.this).create(StoreAPI.class);
 
         partidas = new ArrayList<>();

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#ECEFF1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ECEFF1"
     tools:ignore="ExtraText">
 
     <!-- Encabezado grande -->
@@ -14,49 +13,52 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#455A64"
+        android:gravity="center"
+        android:paddingVertical="24dp"
         android:text="SECCIONES"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:paddingVertical="24dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Botón RANDOM en la parte inferior -->
-    <Button
-        android:id="@+id/btnRandom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="RANDOM"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#00796B"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- SwipeRefresh + RecyclerView -->
+
+    <Button
+        android:id="@+id/btnRandom"
+        android:layout_width="196dp"
+        android:layout_height="43dp"
+        android:layout_margin="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#00796B"
+        android:text="RANDOM"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_back" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTitleSections"
         app:layout_constraintBottom_toTopOf="@id/btnRandom"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/tvTitleSections">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSections"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
             android:clipToPadding="false"
-            android:contentDescription="Lista de secciones disponibles"/>
+            android:contentDescription="Lista de secciones disponibles"
+            android:padding="8dp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -64,13 +66,26 @@
         android:id="@+id/fabOpenMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_menu_24"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/red"
         android:contentDescription="Abrir menú"
-        android:layout_margin="16dp"
-        app:tint="@android:color/white"
+        android:src="@drawable/baseline_menu_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.627"
+        app:layout_constraintStart_toEndOf="@+id/btnRandom"
+        app:tint="@android:color/white" />
 
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="90dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:text="Volver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.981" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

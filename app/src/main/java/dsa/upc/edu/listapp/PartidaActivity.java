@@ -3,6 +3,8 @@ package dsa.upc.edu.listapp;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,7 +31,13 @@ public class PartidaActivity extends AppCompatActivity {
         textViewPartidaInfo = findViewById(R.id.textViewPartidaInfo);
         btnTienda           = findViewById(R.id.btnTienda);
         btnInventario       = findViewById(R.id.btnInventario);
-
+        Button backButton = findViewById(R.id.btn_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         // Recuperamos el objeto Partida
         Partida partida = (Partida) getIntent().getSerializableExtra("partida");
         if (partida != null) {

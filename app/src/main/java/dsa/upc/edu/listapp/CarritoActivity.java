@@ -1,6 +1,7 @@
 package dsa.upc.edu.listapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +63,13 @@ public class CarritoActivity extends AppCompatActivity {
         tvCoins = findViewById(R.id.tvCoins);
         btnEmptyCart = findViewById(R.id.btnEmptyCart);
         btnComprar   = findViewById(R.id.btnComprar);
-
+        Button backButton = findViewById(R.id.btn_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         api = ApiClient.getClient(this).create(StoreAPI.class);
 
         // Adapter con listener de eliminar
