@@ -20,27 +20,34 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Botón Tienda -->
-    <Button
+    <ImageButton
         android:id="@+id/btnTienda"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Tienda"
-        android:textSize="16sp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/store"
         app:layout_constraintTop_toBottomOf="@id/textViewPartidaInfo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Ir a Tienda" />
 
     <!-- Botón Inventario -->
-    <Button
+    <ImageButton
         android:id="@+id/btnInventario"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Inventario"
-        android:textSize="16sp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bag"
         app:layout_constraintTop_toBottomOf="@id/btnTienda"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:contentDescription="Ir a Inventario" />
 
+    <!-- Botón flotante menú -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabOpenMenu"
         android:layout_width="wrap_content"
@@ -53,13 +60,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@android:color/white" />
 
+    <!-- Botón Volver -->
     <Button
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="24dp"
         android:text="Volver"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

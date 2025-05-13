@@ -1,41 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@android:color/white"
     android:padding="24dp"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <Button
+    <!-- Botón Partidas -->
+    <ImageButton
         android:id="@+id/btnGoPartidas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Menu" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home"
+        android:contentDescription="Partidas"
+        android:layout_marginBottom="12dp" />
 
-    <Button
+    <!-- Botón Tienda -->
+    <ImageButton
         android:id="@+id/btnGoStore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tienda" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/store"
+        android:contentDescription="Tienda"
+        android:layout_marginBottom="12dp" />
 
-    <Button
+    <!-- Botón Inventario -->
+    <ImageButton
         android:id="@+id/btnGoInventario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Inventario" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bag"
+        android:contentDescription="Inventario"
+        android:layout_marginBottom="12dp" />
 
-
-    <Button
+    <!-- Botón Carrito -->
+    <ImageButton
         android:id="@+id/btnGoCart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Carrito" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/cart"
+        android:contentDescription="Carrito"
+        android:layout_marginBottom="20dp" />
 
-    <Button
+    <!-- Botón Cerrar Sesión -->
+    <ImageButton
         android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cerrar Sesión"
-        android:textColor="#FF0000" />
-
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/turn_off"
+        android:contentDescription="Cerrar sesión"
+        android:layout_marginTop="20dp" />
 </LinearLayout>

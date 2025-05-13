@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,8 +30,8 @@ public class PartidaActivity extends AppCompatActivity {
             NavigationBottomSheet.showNavigationMenu(this, idPartida);
         });
         textViewPartidaInfo = findViewById(R.id.textViewPartidaInfo);
-        btnTienda           = findViewById(R.id.btnTienda);
-        btnInventario       = findViewById(R.id.btnInventario);
+        ImageButton btnTienda           = findViewById(R.id.btnTienda);
+        ImageButton btnInventario       = findViewById(R.id.btnInventario);
         Button backButton = findViewById(R.id.btn_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
