@@ -12,6 +12,9 @@ public class Producto implements Serializable {
     private String nombre;
     private double precio;
 
+    @SerializedName("imagen")
+    private String imageUrl;
+
     public Producto() {}
 
     public Producto(String id, String nombre, double precio) {
@@ -38,5 +41,13 @@ public class Producto implements Serializable {
     }
     public double getPrecio() {
         return precio;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
