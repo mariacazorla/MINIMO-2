@@ -15,9 +15,6 @@ import dsa.upc.edu.listapp.store.Partida;
 
 public class PartidaActivity extends AppCompatActivity {
 
-    private TextView textViewPartidaInfo;
-    private Button btnTienda, btnInventario;
-
     private String idPartida;
 
     @Override
@@ -25,38 +22,49 @@ public class PartidaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         idPartida = getIntent().getStringExtra("idPartida");
         setContentView(R.layout.activity_partida);
+
+        // Botón flotante para abrir menú inferior
         FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
         fabOpenMenu.setOnClickListener(v -> {
             NavigationBottomSheet.showNavigationMenu(this, idPartida);
         });
-        textViewPartidaInfo = findViewById(R.id.textViewPartidaInfo);
-        ImageButton btnTienda           = findViewById(R.id.btnTienda);
-        ImageButton btnInventario       = findViewById(R.id.btnInventario);
+
+        // Botones tienda e inventario
+        ImageButton btnTienda = findViewById(R.id.btnTienda);
+        ImageButton btnInventario = findViewById(R.id.btnInventario);
+
+        // Botón de volver
         Button backButton = findViewById(R.id.btn_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
+
+        // Nuevos TextView individuales
+        TextView tvIdPartida   = findViewById(R.id.tvIdPartida);
+        TextView tvUsuario     = findViewById(R.id.tvUsuario);
+        TextView tvVidas       = findViewById(R.id.tvVidas);
+        TextView tvMonedas     = findViewById(R.id.tvMonedas);
+        TextView tvPuntuacion  = findViewById(R.id.tvPuntuacion);
+
         // Recuperamos el objeto Partida
         Partida partida = (Partida) getIntent().getSerializableExtra("partida");
+
         if (partida != null) {
-            String info = "ID: "       + partida.getId_partida() + "\n"
-                    + "Usuario: " + partida.getId_usuario() + "\n"
-                    + "Vidas: "   + partida.getVidas()      + "\n"
-                    + "Monedas: " + partida.getMonedas()    + "\n"
-                    + "Puntuación: " + partida.getPuntuacion();
-            textViewPartidaInfo.setText(info);
+            // Mostramos info en los TextViews
+            tvIdPartida.setText("ID: " + partida.getId_partida());
+            tvUsuario.setText("Usuario: " + partida.getId_usuario());
+            tvVidas.setText("Vidas: " + partida.getVidas());
+            tvMonedas.setText("Monedas: " + partida.getMonedas());
+            tvPuntuacion.setText("Puntuación: " + partida.getPuntuacion());
 
             String idPartida = partida.getId_partida();
 
+            // Ir a Tienda
             btnTienda.setOnClickListener(v -> {
                 Intent intent = new Intent(PartidaActivity.this, StoreActivity.class);
                 intent.putExtra("idPartida", idPartida);
                 startActivity(intent);
             });
 
+            // Ir a Inventario
             btnInventario.setOnClickListener(v -> {
                 Intent intent = new Intent(PartidaActivity.this, InventarioActivity.class);
                 intent.putExtra("idPartida", idPartida);
@@ -64,11 +72,17 @@ public class PartidaActivity extends AppCompatActivity {
             });
 
         } else {
-            textViewPartidaInfo.setText("No se pudo cargar la partida.");
-            // Deshabilitar botones si no hay partida
+            // Si no hay partida, mostrar mensaje y ocultar campos
+            tvIdPartida.setText("No se pudo cargar la partida.");
+            tvUsuario.setVisibility(View.GONE);
+            tvVidas.setVisibility(View.GONE);
+            tvMonedas.setVisibility(View.GONE);
+            tvPuntuacion.setVisibility(View.GONE);
+
             btnTienda.setEnabled(false);
             btnInventario.setEnabled(false);
         }
     }
 }
+
 

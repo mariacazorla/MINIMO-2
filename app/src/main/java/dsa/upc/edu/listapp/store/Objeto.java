@@ -1,5 +1,7 @@
 package dsa.upc.edu.listapp.store;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Objeto implements Serializable {
@@ -7,6 +9,11 @@ public class Objeto implements Serializable {
     private String nombre;
     private int precio;
     private CategoriaObjeto categoria;
+
+    @SerializedName("imagen")
+    private String imageUrl;
+
+
 
     public String getId_objeto() {
         return id_objeto;
@@ -38,6 +45,14 @@ public class Objeto implements Serializable {
 
     public void setCategoria(CategoriaObjeto categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
