@@ -48,6 +48,7 @@ public class StoreActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         // Añadir listener al botón RANDOM
         findViewById(R.id.btnRandom).setOnClickListener(view -> {
             Intent intent = new Intent(StoreActivity.this, RandomActivity.class);

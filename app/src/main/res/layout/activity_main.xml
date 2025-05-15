@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECEFF1"
+    android:background="@drawable/item_shop"
     tools:ignore="ExtraText">
 
     <!-- Encabezado grande -->
@@ -12,7 +12,7 @@
         android:id="@+id/tvTitleSections"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#455A64"
+        android:background="#99FFFFFF"
         android:gravity="center"
         android:paddingVertical="24dp"
         android:text="SECCIONES"
@@ -36,6 +36,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#00796B"
+        android:background="#99FFFFFF"
         android:text="RANDOM"
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
@@ -83,6 +84,7 @@
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
         android:text="Volver"
+        android:background="#99FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

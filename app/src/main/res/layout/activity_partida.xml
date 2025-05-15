@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/calle"
+    android:scaleType="fitCenter"
+
 
     android:padding="16dp"
     android:layout_width="match_parent"

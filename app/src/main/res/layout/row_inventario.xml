@@ -37,17 +37,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
+                android:textColor="#DE0808"
                 android:textSize="16sp"
                 android:ellipsize="end"
                 android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tvItemPrice"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="0.00€"
                 android:textAlignment="textEnd"
+                android:textColor="#DE0808"
                 android:textSize="16sp" />
         </LinearLayout>
 
