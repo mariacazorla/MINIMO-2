@@ -32,17 +32,6 @@ public class InventarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventario);
-        Button backButton = findViewById(R.id.btn_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
-        fabOpenMenu.setOnClickListener(v -> {
-            NavigationBottomSheet.showNavigationMenu(this, null);
-        });
 
         idPartida = getIntent().getStringExtra("idPartida");
         if (idPartida == null) {
@@ -51,14 +40,23 @@ public class InventarioActivity extends AppCompatActivity {
             return;
         }
 
+        Button backButton = findViewById(R.id.btn_back);
+        backButton.setOnClickListener(view -> finish());
+
+        FloatingActionButton fabOpenMenu = findViewById(R.id.fabOpenMenu);
+        fabOpenMenu.setOnClickListener(v -> {
+            NavigationBottomSheet.showNavigationMenu(this, idPartida);
+        });
+
         rv = findViewById(R.id.rvInventario);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new InventarioAdapter();
+        adapter = new InventarioAdapter(false);
         rv.setAdapter(adapter);
 
         api = ApiClient.getClient(this).create(StoreAPI.class);
         cargarInventario();
     }
+
 
     private void cargarInventario() {
         api.getPartidaDetalle(idPartida)

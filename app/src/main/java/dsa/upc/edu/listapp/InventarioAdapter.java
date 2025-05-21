@@ -21,7 +21,10 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.VH
     private static final String BASE_URL = "http://10.0.2.2:8080"; // Emulador: localhost
 
     private List<Objeto> data = new ArrayList<>();
-
+    private boolean mostrarPrecio;
+    public InventarioAdapter(boolean mostrarPrecio) {
+        this.mostrarPrecio = mostrarPrecio;
+    }
     public void setData(List<Objeto> lista) {
         this.data = lista;
         notifyDataSetChanged();
@@ -38,15 +41,20 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.VH
     public void onBindViewHolder(VH holder, int position) {
         Objeto o = data.get(position);
 
-        // Setear nombre y precio
         holder.tvName.setText(o.getNombre());
-        holder.tvPrice.setText(String.format(Locale.getDefault(), "%.2f€", (double) o.getPrecio()));
 
-        // Cargar imagen con Glide
-        String imageUrl = o.getImageUrl(); // Asegúrate de que este método exista en Objeto
+        if (mostrarPrecio) {
+            holder.tvPrice.setVisibility(View.VISIBLE);
+            holder.tvPrice.setText(String.format(Locale.getDefault(), "%.2f€", (double) o.getPrecio()));
+        } else {
+            holder.tvPrice.setVisibility(View.GONE);
+        }
+
+        // Imagen
+        String imageUrl = o.getImageUrl();
         if (imageUrl == null || imageUrl.isEmpty()) {
             Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.img) // Imagen por defecto
+                    .load(R.drawable.img)
                     .into(holder.imgProduct);
         } else {
             String fullUrl = BASE_URL + imageUrl;
@@ -57,6 +65,7 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.VH
                     .into(holder.imgProduct);
         }
     }
+
 
     @Override
     public int getItemCount() {
