@@ -61,9 +61,14 @@
             android:name=".RandomActivity"
             android:exported="true" />
 
-
         <activity
             android:name=".PartidaActivity"
             android:exported="true" />
+
+        <!-- Nueva actividad para mostrar insignias -->
+        <activity
+            android:name=".InsigniasActivity"
+            android:exported="true" />
+
     </application>
 </manifest>
